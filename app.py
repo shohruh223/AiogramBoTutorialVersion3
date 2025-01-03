@@ -10,6 +10,7 @@ from data.config import ADMINS
 async def on_startup(bot: Bot):
     for admin in ADMINS:
         await bot.send_message(admin, "Bot ishga tushdi!")
+    logging.info("Bot ishga tushganligi haqida xabar yuborildi.")
 
 
 async def main():
@@ -19,6 +20,9 @@ async def main():
 
     handler_routers = setup_message_routers()
     dp.include_router(handler_routers)
+
+    await bot.delete_webhook(drop_pending_updates=True)
+
     await dp.start_polling(bot)
 
 
